@@ -7,7 +7,7 @@ export default async function DashboardLayout({
 }) {
   // Middleware already handles auth check, no need to duplicate
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-light-bg pb-20">
       {children}
       <Navigation />
     </div>

@@ -39,11 +39,23 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Nigerian-themed colors
+        "naija-green": "#1EB980",
+        "eko-teal": "#147A78",
+        "palm-gold": "#B88A2A",
+        "light-bg": "#F9FAFB",
+        "text-dark": "#111827",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
+      boxShadow: {
+        custom: "0 4px 20px rgba(30, 185, 128, 0.15)",
       },
     },
   },

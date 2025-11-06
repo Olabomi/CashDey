@@ -1,6 +1,5 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
 
 interface BalanceCardProps {
@@ -14,39 +13,43 @@ export default function BalanceCard({
   burnRate,
   daysRemaining,
 }: BalanceCardProps) {
+  const progressPercentage = daysRemaining !== null 
+    ? Math.min((daysRemaining / 90) * 100, 100) 
+    : 0;
+
   return (
-    <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white mb-4">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
+    <div className="bg-gradient-to-br from-naija-green to-eko-teal rounded-3xl p-6 shadow-custom relative overflow-hidden mb-6">
+      {/* Decorative circle */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-8 -mt-8"></div>
+      
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-green-100 text-sm mb-1">Total Balance</p>
-            <p className="text-3xl font-bold">{formatCurrency(balance)}</p>
-            <div className="mt-4">
-              <p className="text-green-100 text-sm">Burn Rate</p>
-              <p className="text-xl font-semibold">{formatCurrency(burnRate)}/day</p>
-            </div>
-            {daysRemaining !== null && (
-              <div className="mt-2">
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 bg-green-400/30 rounded-full h-2">
-                    <div
-                      className="bg-white h-2 rounded-full transition-all"
-                      style={{
-                        width: `${Math.min((daysRemaining / 90) * 100, 100)}%`,
-                      }}
-                    />
-                  </div>
-                  <p className="text-sm text-green-100">
-                    You fit last {daysRemaining} more days at this rate.
-                  </p>
-                </div>
-              </div>
-            )}
+            <p className="text-white/80 text-sm font-medium mb-1">Total Balance</p>
+            <h2 className="text-white text-3xl font-bold">{formatCurrency(balance)}</h2>
           </div>
           <div className="text-4xl">😊</div>
         </div>
-      </CardContent>
-    </Card>
+        
+        <div className="bg-white/20 rounded-2xl p-4 backdrop-blur-sm">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-white/90 text-sm">Burn Rate</span>
+            <span className="text-white font-semibold">{formatCurrency(burnRate)}/day</span>
+          </div>
+          <div className="w-full bg-white/20 rounded-full h-2 mb-2">
+            <div 
+              className="bg-white h-2 rounded-full transition-all"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+          {daysRemaining !== null && (
+            <p className="text-white/90 text-xs">
+              You fit last {daysRemaining} more days at this rate
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

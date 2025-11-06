@@ -9,7 +9,6 @@ import {
   getWeeklySpending,
 } from "@/lib/dashboard/calculations";
 import { Profile, Expense, SavingsGoal } from "@/types";
-import { Button } from "@/components/ui/button";
 import { Bell } from "lucide-react";
 import BalanceCard from "./BalanceCard";
 import SurvivalStatusCard from "./SurvivalStatusCard";
@@ -17,10 +16,9 @@ import QuickActions from "./QuickActions";
 import WeeklySpendingWidget from "./WeeklySpendingWidget";
 import GoalsWidget from "./GoalsWidget";
 import RecentTransactions from "./RecentTransactions";
-import SpendingSummary from "./SpendingSummary";
-import SpendingChart from "./SpendingChart";
-import LatestPerks from "./LatestPerks";
-import PortfolioSnapshot from "./PortfolioSnapshot";
+import CoachInsights from "./CoachInsights";
+import PremiumBanner from "./PremiumBanner";
+import MoneyTips from "./MoneyTips";
 
 interface DashboardContentProps {
   profile: Profile | null;
@@ -61,66 +59,85 @@ export default function DashboardContent({
   }, [totalBalance, survivalStats, supabase]);
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-4xl">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold">CashDey</h1>
-          <p className="text-muted-foreground">
-            {greeting}, {preferredName}!
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon">
-            <Bell className="w-5 h-5" />
-          </Button>
-          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-sm font-semibold">
-              {preferredName.charAt(0).toUpperCase()}
-            </span>
+    <div className="max-w-sm mx-auto bg-white min-h-screen relative pb-20">
+      {/* Header Section with Glass Effect */}
+      <div className="glass-effect sticky top-0 z-50 px-4 py-3 border-b border-gray-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 bg-gradient-to-r from-naija-green to-eko-teal rounded-full flex items-center justify-center">
+              <span className="text-white text-sm font-bold">₦</span>
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-text-dark">CashDey</h1>
+              <p className="text-xs text-gray-500">
+                {greeting}, {preferredName}!
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="relative">
+              <Bell className="text-gray-600 text-lg" />
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
+                3
+              </span>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-naija-green/10 border-2 border-naija-green flex items-center justify-center">
+              <span className="text-sm font-semibold text-naija-green">
+                {preferredName.charAt(0).toUpperCase()}
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Your Financial Hub Section */}
-      <div className="mb-6">
-        <h2 className="text-xl font-bold mb-2">Your Financial Hub</h2>
-        <p className="text-muted-foreground text-sm">An overview of your money story.</p>
+      {/* Balance & Survival Status Section */}
+      <div className="px-4 pt-6 pb-4">
+        <BalanceCard
+          balance={totalBalance}
+          burnRate={survivalStats.dailyBurnRate}
+          daysRemaining={survivalStats.daysRemaining}
+        />
       </div>
 
-      {/* Balance Card */}
-      <BalanceCard
-        balance={totalBalance}
-        burnRate={survivalStats.dailyBurnRate}
-        daysRemaining={survivalStats.daysRemaining}
-      />
+      {/* Survival Status Banner */}
+      <div className="px-4 mb-6">
+        <SurvivalStatusCard status={survivalStats.status} />
+      </div>
 
-      {/* Survival Status */}
-      <SurvivalStatusCard status={survivalStats.status} />
+      {/* Quick Actions Section */}
+      <div className="px-4 mb-6">
+        <QuickActions />
+      </div>
 
-      {/* Spending Summary */}
-      <SpendingSummary expenses={expenses} />
+      {/* Spending Overview Section */}
+      <div className="px-4 mb-6">
+        <WeeklySpendingWidget weeklySpending={weeklySpending} />
+      </div>
 
-      {/* Spending Chart */}
-      <SpendingChart expenses={expenses} />
+      {/* Goals Progress Section */}
+      <div className="px-4 mb-6">
+        <GoalsWidget goals={goals} />
+      </div>
 
-      {/* Savings Goals */}
-      <GoalsWidget goals={goals} />
+      {/* Recent Transactions Section */}
+      <div className="px-4 mb-6">
+        <RecentTransactions expenses={expenses.slice(0, 4)} />
+      </div>
 
-      {/* Portfolio Snapshot */}
-      <PortfolioSnapshot />
+      {/* Coach Insights Section */}
+      <div className="px-4 mb-6">
+        <CoachInsights />
+      </div>
 
-      {/* Quick Actions */}
-      <QuickActions />
+      {/* Premium Upgrade Banner */}
+      <div className="px-4 mb-6">
+        <PremiumBanner />
+      </div>
 
-      {/* Latest Perks */}
-      <LatestPerks />
-
-      {/* Weekly Spending */}
-      <WeeklySpendingWidget weeklySpending={weeklySpending} />
-
-      {/* Recent Transactions */}
-      <RecentTransactions expenses={expenses.slice(0, 4)} />
+      {/* Tips & Education Section */}
+      <div className="px-4 mb-20">
+        <MoneyTips />
+      </div>
     </div>
   );
 }

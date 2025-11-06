@@ -1,54 +1,59 @@
 "use client";
 
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Plus, Target, Bot } from "lucide-react";
+import { Plus, TrendingUp, Bot, Bell } from "lucide-react";
 
 const actions = [
   {
     icon: Plus,
-    label: "Add Expense",
+    label: "Log Expense",
     description: "Track your spending",
     href: "/dashboard/expenses/new",
-    color: "text-green-600",
-    bgColor: "bg-green-50",
+    color: "text-naija-green",
+    bgColor: "bg-naija-green/10",
   },
   {
-    icon: Target,
-    label: "Set Savings Goal",
-    description: "Plan your future",
-    href: "/dashboard/goals/new",
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
+    icon: TrendingUp,
+    label: "See Report",
+    description: "View analytics",
+    href: "/dashboard/wallet",
+    color: "text-eko-teal",
+    bgColor: "bg-eko-teal/10",
   },
   {
     icon: Bot,
-    label: "Talk to Advisor",
+    label: "Ask Coach",
     description: "Get advice",
     href: "/dashboard/coach",
-    color: "text-yellow-600",
-    bgColor: "bg-yellow-50",
+    color: "text-palm-gold",
+    bgColor: "bg-palm-gold/10",
+  },
+  {
+    icon: Bell,
+    label: "Remind Me",
+    description: "Set alerts",
+    href: "/dashboard/profile",
+    color: "text-purple-600",
+    bgColor: "bg-purple-100",
   },
 ];
 
 export default function QuickActions() {
   return (
     <div className="mb-6">
-      <h2 className="text-lg font-semibold mb-3">Quick Actions</h2>
-      <div className="grid grid-cols-3 gap-3">
+      <h3 className="text-lg font-bold text-text-dark mb-4">Quick Actions</h3>
+      <div className="grid grid-cols-2 gap-3">
         {actions.map((action) => {
           const Icon = action.icon;
           return (
             <Link key={action.label} href={action.href}>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-4">
-                  <div className={`w-12 h-12 ${action.bgColor} rounded-lg flex items-center justify-center mb-3`}>
-                    <Icon className={`w-6 h-6 ${action.color}`} />
-                  </div>
-                  <p className="font-semibold text-sm">{action.label}</p>
-                  <p className="text-xs text-muted-foreground">{action.description}</p>
-                </CardContent>
-              </Card>
+              <button className="bg-white rounded-2xl p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow w-full text-left">
+                <div className={`w-12 h-12 ${action.bgColor} rounded-2xl flex items-center justify-center mb-3 mx-auto`}>
+                  <Icon className={`${action.color} text-lg`} />
+                </div>
+                <h4 className="font-semibold text-sm text-text-dark mb-1">{action.label}</h4>
+                <p className="text-xs text-gray-500">{action.description}</p>
+              </button>
             </Link>
           );
         })}
