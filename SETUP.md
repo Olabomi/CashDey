@@ -89,10 +89,11 @@ All tables have Row Level Security (RLS) enabled.
 ## Next Steps
 
 1. Configure OAuth providers in Supabase
-2. Set up Paystack webhook endpoint for subscription renewals
-3. Deploy to Vercel for production
-4. Configure production environment variables
-5. Test payment flows in Paystack test mode
+2. Deploy Paystack webhook Edge Function (see `supabase/functions/payment-webhook/README.md`)
+3. Configure Paystack webhook URL in Paystack dashboard
+4. Deploy to Vercel for production
+5. Configure production environment variables
+6. Test payment flows in Paystack test mode
 
 ## Deployment
 
@@ -106,7 +107,9 @@ All tables have Row Level Security (RLS) enabled.
 ### Production Checklist
 
 - [ ] Update `NEXT_PUBLIC_APP_URL` to production domain
-- [ ] Configure Paystack webhook URL in Paystack dashboard
+- [ ] Deploy Paystack webhook Edge Function to Supabase
+- [ ] Set Edge Function environment variables (PAYSTACK_SECRET_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+- [ ] Configure Paystack webhook URL in Paystack dashboard: `https://your-project-ref.supabase.co/functions/v1/payment-webhook`
 - [ ] Test OAuth redirect URLs
 - [ ] Enable Paystack live mode
 - [ ] Setup monitoring (e.g., Sentry)

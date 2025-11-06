@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, XCircle } from "lucide-react";
 
-export default function SubscriptionCallbackPage() {
+function SubscriptionCallbackContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -78,6 +78,27 @@ export default function SubscriptionCallbackPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <Card className="max-w-md w-full">
+        <CardContent className="p-8 text-center">
+          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-lg font-semibold">Loading...</p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+export default function SubscriptionCallbackPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <SubscriptionCallbackContent />
+    </Suspense>
   );
 }
 
