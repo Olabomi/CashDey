@@ -80,17 +80,17 @@ export default function GoalsWidget({ goals }: GoalsWidgetProps) {
                   </span>
                 </div>
                 <div>
-                  <div className="flex items-center justify-between text-sm mb-1">
+                  <div className="flex items-center justify-between text-sm mb-2">
                     <span className="text-muted-foreground">
                       {formatCurrency(goal.current_amount)} saved
                     </span>
-                    <span className="font-semibold">
-                      {formatCurrency(goal.target_amount)} target
+                    <span className="font-bold text-lg">
+                      {Math.round(progress.percentage)}%
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-gray-200 rounded-full h-3 mb-1">
                     <div
-                      className={`h-2 rounded-full transition-all ${
+                      className={`h-3 rounded-full transition-all ${
                         progress.status === "urgent"
                           ? "bg-orange-500"
                           : progress.status === "completed"
@@ -100,9 +100,10 @@ export default function GoalsWidget({ goals }: GoalsWidgetProps) {
                       style={{ width: `${progress.percentage}%` }}
                     />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {formatCurrency(progress.remaining)} more to go
-                  </p>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>Progress</span>
+                    <span>{formatCurrency(progress.remaining)} more to go</span>
+                  </div>
                 </div>
               </div>
             );

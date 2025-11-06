@@ -52,6 +52,18 @@ export const EXPENSE_CATEGORIES = [
   "Other",
 ] as const;
 
+export const INCOME_CATEGORIES = [
+  "Salary",
+  "Freelance",
+  "Business",
+  "Investment",
+  "Gift",
+  "Bonus",
+  "Rental Income",
+  "Side Hustle",
+  "Other",
+] as const;
+
 export const GOAL_CATEGORIES = [
   "House Rent",
   "Emergency Fund",

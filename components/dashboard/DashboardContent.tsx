@@ -1,25 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { getGreeting, formatCurrency } from "@/lib/utils";
+import { getGreeting } from "@/lib/utils";
 import {
   calculateSurvivalStats,
   calculateTotalBalance,
   getWeeklySpending,
-  calculateGoalProgress,
 } from "@/lib/dashboard/calculations";
 import { Profile, Expense, SavingsGoal } from "@/types";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, TrendingUp, Bot, Bell, Smile } from "lucide-react";
-import Link from "next/link";
+import { Bell } from "lucide-react";
 import BalanceCard from "./BalanceCard";
 import SurvivalStatusCard from "./SurvivalStatusCard";
 import QuickActions from "./QuickActions";
 import WeeklySpendingWidget from "./WeeklySpendingWidget";
 import GoalsWidget from "./GoalsWidget";
 import RecentTransactions from "./RecentTransactions";
+import SpendingSummary from "./SpendingSummary";
+import SpendingChart from "./SpendingChart";
+import LatestPerks from "./LatestPerks";
+import PortfolioSnapshot from "./PortfolioSnapshot";
 
 interface DashboardContentProps {
   profile: Profile | null;
@@ -34,8 +35,8 @@ export default function DashboardContent({
   goals,
   survival,
 }: DashboardContentProps) {
-  const [balance, setBalance] = useState(survival?.balance || 0);
   const supabase = createClient();
+  const balance = survival?.balance || 0;
 
   const greeting = getGreeting();
   const preferredName = profile?.preferred_name || "Chief";
@@ -81,6 +82,12 @@ export default function DashboardContent({
         </div>
       </div>
 
+      {/* Your Financial Hub Section */}
+      <div className="mb-6">
+        <h2 className="text-xl font-bold mb-2">Your Financial Hub</h2>
+        <p className="text-muted-foreground text-sm">An overview of your money story.</p>
+      </div>
+
       {/* Balance Card */}
       <BalanceCard
         balance={totalBalance}
@@ -91,14 +98,26 @@ export default function DashboardContent({
       {/* Survival Status */}
       <SurvivalStatusCard status={survivalStats.status} />
 
+      {/* Spending Summary */}
+      <SpendingSummary expenses={expenses} />
+
+      {/* Spending Chart */}
+      <SpendingChart expenses={expenses} />
+
+      {/* Savings Goals */}
+      <GoalsWidget goals={goals} />
+
+      {/* Portfolio Snapshot */}
+      <PortfolioSnapshot />
+
       {/* Quick Actions */}
       <QuickActions />
 
+      {/* Latest Perks */}
+      <LatestPerks />
+
       {/* Weekly Spending */}
       <WeeklySpendingWidget weeklySpending={weeklySpending} />
-
-      {/* Goals */}
-      <GoalsWidget goals={goals} />
 
       {/* Recent Transactions */}
       <RecentTransactions expenses={expenses.slice(0, 4)} />

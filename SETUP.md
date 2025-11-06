@@ -6,6 +6,7 @@
 - A Supabase account (free tier works)
 - An OpenAI API key
 - A Paystack account (for payments)
+- A Resend account (optional, for email transcriptions)
 
 ## Setup Instructions
 
@@ -39,6 +40,10 @@ OPENAI_API_KEY=your_openai_api_key
 PAYSTACK_SECRET_KEY=your_paystack_secret_key
 NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=your_paystack_public_key
 
+# Resend (Optional - for email transcriptions)
+RESEND_API_KEY=your_resend_api_key
+RESEND_FROM_EMAIL=CashDey <noreply@yourdomain.com>
+
 # App
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
@@ -62,6 +67,12 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ✅ Paystack subscription integration
 ✅ Profile and settings management
 ✅ Responsive design for mobile
+✅ WhatsApp-like chat interface with:
+  - Text and Voice modes
+  - Emoji picker
+  - File uploads (images, PDFs, documents)
+  - Voice recording with transcription
+  - Email transcript feature
 
 ## Database Schema
 

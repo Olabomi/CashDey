@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { EXPENSE_CATEGORIES } from "@/types";
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
 export default function NewExpensePage() {
@@ -34,10 +34,15 @@ export default function NewExpensePage() {
       return;
     }
 
+    // Validate category matches type - ensure income and expense use their respective categories
+    const validCategories = type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+    const defaultCategory = type === "income" ? "Other" : "Other";
+    const validCategory = validCategories.includes(category as any) ? category : defaultCategory;
+
     const { error } = await supabase.from("expenses").insert({
       user_id: user.id,
       amount: parseFloat(amount.replace(/,/g, "")),
-      category,
+      category: validCategory,
       description,
       date,
       type,
@@ -75,7 +80,10 @@ export default function NewExpensePage() {
               <Button
                 type="button"
                 variant={type === "expense" ? "default" : "outline"}
-                onClick={() => setType("expense")}
+                onClick={() => {
+                  setType("expense");
+                  setCategory(""); // Reset category when switching types
+                }}
                 className="flex-1"
               >
                 Expense
@@ -83,7 +91,10 @@ export default function NewExpensePage() {
               <Button
                 type="button"
                 variant={type === "income" ? "default" : "outline"}
-                onClick={() => setType("income")}
+                onClick={() => {
+                  setType("income");
+                  setCategory(""); // Reset category when switching types
+                }}
                 className="flex-1"
               >
                 Income
@@ -112,7 +123,7 @@ export default function NewExpensePage() {
                 required
               >
                 <option value="">Select category</option>
-                {EXPENSE_CATEGORIES.map((cat) => (
+                {(type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES).map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
                   </option>

@@ -127,3 +127,17 @@ export function calculateGoalProgress(goal: SavingsGoal): {
   };
 }
 
+export function getMonthlySpending(expenses: Expense[]): number {
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  
+  const monthlyExpenses = expenses.filter(
+    (e) =>
+      e.type === "expense" &&
+      new Date(e.date) >= startOfMonth &&
+      new Date(e.date) <= now
+  );
+
+  return monthlyExpenses.reduce((sum, e) => sum + Number(e.amount), 0);
+}
+
