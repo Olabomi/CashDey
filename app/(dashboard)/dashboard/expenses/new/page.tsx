@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import BackButton from "@/components/ui/back-button";
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/types";
 import { useToast } from "@/hooks/use-toast";
 
@@ -66,14 +67,20 @@ export default function NewExpensePage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-2xl">
-      <Card>
-        <CardHeader>
-          <CardTitle>Log {type === "income" ? "Income" : "Expense"}</CardTitle>
-          <CardDescription>
-            Track your {type === "income" ? "income" : "spending"}
-          </CardDescription>
-        </CardHeader>
+    <div className="max-w-sm mx-auto bg-light-bg min-h-screen pb-24">
+      <div className="sticky top-0 z-40 glass-effect px-4 py-4 border-b border-gray-200/50 shadow-sm">
+        <BackButton href="/dashboard" className="mb-2" />
+      </div>
+      <div className="px-4 py-6">
+        <Card className="shadow-soft border-gray-200/50">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold tracking-tight">
+              Log {type === "income" ? "Income" : "Expense"}
+            </CardTitle>
+            <CardDescription className="text-text-muted font-medium">
+              Track your {type === "income" ? "income" : "spending"}
+            </CardDescription>
+          </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex gap-2">
@@ -114,10 +121,10 @@ export default function NewExpensePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category">Category</Label>
+              <Label htmlFor="category" className="font-semibold text-text-dark">Category</Label>
               <select
                 id="category"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex h-11 w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-2.5 text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-naija-green focus-visible:border-naija-green transition-all duration-200 hover:border-gray-300"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
@@ -153,14 +160,15 @@ export default function NewExpensePage() {
               />
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 pt-2">
               <Button type="submit" className="flex-1" disabled={loading}>
                 {loading ? "Saving..." : "Save"}
               </Button>
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => router.back()}
+                onClick={() => router.push("/dashboard")}
+                className="flex-1"
               >
                 Cancel
               </Button>
@@ -168,6 +176,7 @@ export default function NewExpensePage() {
           </form>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

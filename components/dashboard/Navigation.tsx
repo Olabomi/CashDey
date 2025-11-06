@@ -17,7 +17,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-white border-t border-gray-100 px-4 py-2 z-50">
+    <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-white/95 backdrop-blur-xl border-t border-gray-200/50 px-4 py-3 z-50 shadow-soft">
       <div className="flex items-center justify-around">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -29,17 +29,28 @@ export default function Navigation() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center space-y-1 py-2 px-3 rounded-2xl transition-colors relative",
+                "flex flex-col items-center space-y-1 py-2 px-4 rounded-2xl transition-all duration-300 relative group",
                 isActive
-                  ? "bg-naija-green/10 text-naija-green"
-                  : "text-gray-400 hover:text-gray-600"
+                  ? "bg-gradient-to-br from-naija-green/15 to-eko-teal/10 text-naija-green"
+                  : "text-gray-400 hover:text-gray-700 hover:bg-gray-50"
               )}
             >
               {isActive && (
-                <div className="w-1 h-1 bg-naija-green rounded-full absolute -top-1"></div>
+                <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-naija-green rounded-full animate-scale-in"></div>
               )}
-              <Icon className={cn("text-lg", isActive ? "text-naija-green" : "")} />
-              <span className={cn("text-xs font-medium", isActive ? "text-naija-green" : "")}>
+              <div className={cn(
+                "transition-transform duration-300",
+                isActive ? "scale-110" : "group-hover:scale-105"
+              )}>
+                <Icon className={cn(
+                  "text-xl transition-colors duration-300",
+                  isActive ? "text-naija-green" : "text-gray-400 group-hover:text-gray-700"
+                )} />
+              </div>
+              <span className={cn(
+                "text-xs font-semibold transition-colors duration-300",
+                isActive ? "text-naija-green" : "text-gray-500 group-hover:text-gray-700"
+              )}>
                 {item.label}
               </span>
             </Link>

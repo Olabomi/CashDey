@@ -66,16 +66,16 @@ export default function RecentTransactions({ expenses }: RecentTransactionsProps
   return (
     <div className="mb-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-text-dark">Recent Transactions</h3>
+        <h3 className="text-lg font-bold text-text-dark tracking-tight">Recent Transactions</h3>
         <Link href="/dashboard/wallet">
-          <button className="text-naija-green text-sm font-semibold hover:underline">
-            View All
+          <button className="text-naija-green text-sm font-bold hover:text-eko-teal transition-colors duration-200">
+            View All →
           </button>
         </Link>
       </div>
       
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 divide-y divide-gray-100">
-        {expenses.slice(0, 4).map((expense) => {
+      <div className="bg-white rounded-2xl shadow-soft border border-gray-100/50 divide-y divide-gray-100/50 overflow-hidden">
+        {expenses.slice(0, 4).map((expense, index) => {
           const Icon =
             typeof categoryIcons[expense.category] === "string"
               ? null
@@ -89,33 +89,34 @@ export default function RecentTransactions({ expenses }: RecentTransactionsProps
           return (
             <div
               key={expense.id}
-              className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+              className="p-4 flex items-center justify-between hover:bg-gray-50/50 transition-all duration-200 group cursor-pointer"
+              style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3 flex-1 min-w-0">
                 {Icon ? (
-                  <div className={`w-10 h-10 ${colors.bg} rounded-full flex items-center justify-center`}>
-                    <Icon className={`${colors.text} text-sm`} />
+                  <div className={`w-12 h-12 ${colors.bg} rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform duration-200 group-hover:scale-110`}>
+                    <Icon className={`${colors.text} text-base`} />
                   </div>
                 ) : (
-                  <div className="text-2xl">{iconEmoji}</div>
+                  <div className="text-3xl flex-shrink-0">{iconEmoji}</div>
                 )}
-                <div>
-                  <p className="font-semibold text-sm text-text-dark">
+                <div className="flex-1 min-w-0">
+                  <p className="font-bold text-sm text-text-dark truncate">
                     {expense.description || expense.category}
                   </p>
-                  <p className="text-xs text-gray-500">{getRelativeTime(expense.date)}</p>
+                  <p className="text-xs text-text-muted font-medium">{getRelativeTime(expense.date)}</p>
                 </div>
               </div>
-              <div className="text-right">
+              <div className="text-right flex-shrink-0 ml-3">
                 <p
-                  className={`font-bold text-sm ${
+                  className={`font-bold text-base ${
                     expense.type === "income" ? "text-green-600" : "text-red-600"
                   }`}
                 >
                   {expense.type === "income" ? "+" : "-"}
                   {formatCurrency(expense.amount)}
                 </p>
-                <p className="text-xs text-gray-500">{expense.category}</p>
+                <p className="text-xs text-text-muted font-medium">{expense.category}</p>
               </div>
             </div>
           );

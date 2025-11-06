@@ -51,17 +51,22 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-naija-green/5 via-light-bg to-eko-teal/5 p-4">
+      <Card className="w-full max-w-md shadow-elevated border-gray-200/50 animate-scale-in">
+        <CardHeader className="space-y-2 pb-6">
+          <div className="flex justify-center mb-2">
+            <div className="w-16 h-16 bg-gradient-to-br from-naija-green to-eko-teal rounded-2xl flex items-center justify-center shadow-glow">
+              <span className="text-white text-2xl font-bold">₦</span>
+            </div>
+          </div>
+          <CardTitle className="text-3xl font-bold text-center tracking-tight text-text-dark">
             Welcome to CashDey
           </CardTitle>
-          <CardDescription className="text-center">
+          <CardDescription className="text-center text-text-muted font-medium">
             Your Nigerian Financial Co-pilot
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-5">
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -85,7 +90,7 @@ export default function LoginPage() {
               />
             </div>
             {error && (
-              <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-md">
+              <div className="text-sm text-destructive bg-red-50 border border-red-200 p-3 rounded-xl font-medium">
                 {error}
               </div>
             )}
@@ -94,23 +99,24 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="relative">
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
+              <span className="w-full border-t border-gray-200" />
             </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">
+            <div className="relative flex justify-center text-xs">
+              <span className="bg-white px-3 text-text-muted font-medium">
                 Or continue with
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3">
             <Button
               type="button"
               variant="outline"
               onClick={() => handleOAuthLogin("google")}
               disabled={loading}
+              className="font-semibold"
             >
               Google
             </Button>
@@ -119,14 +125,15 @@ export default function LoginPage() {
               variant="outline"
               onClick={() => handleOAuthLogin("apple")}
               disabled={loading}
+              className="font-semibold"
             >
               Apple
             </Button>
           </div>
 
-          <div className="text-center text-sm">
-            <span className="text-muted-foreground">Don&apos;t have an account? </span>
-            <Link href="/auth/signup" className="text-primary hover:underline">
+          <div className="text-center text-sm pt-2">
+            <span className="text-text-muted">Don&apos;t have an account? </span>
+            <Link href="/auth/signup" className="text-naija-green font-bold hover:text-eko-teal transition-colors">
               Sign up
             </Link>
           </div>

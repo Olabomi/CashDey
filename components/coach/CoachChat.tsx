@@ -365,106 +365,113 @@ export default function CoachChat({
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-4xl h-[calc(100vh-120px)] flex flex-col">
+    <div className="max-w-sm mx-auto bg-light-bg min-h-screen pb-24 flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-[#25D366] rounded-full flex items-center justify-center">
-            <Bot className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold">CashDey Coach</h1>
-              {/* Connection Status Indicator */}
-              <div className="flex items-center gap-1.5">
-                {connectionStatus === "connected" && (
-                  <div className="flex items-center gap-1 text-xs text-green-600">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span>Connected</span>
-                  </div>
-                )}
-                {connectionStatus === "connecting" && (
-                  <div className="flex items-center gap-1 text-xs text-yellow-600">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-                    <span>Connecting...</span>
-                  </div>
-                )}
-                {connectionStatus === "error" && (
-                  <div className="flex items-center gap-1 text-xs text-red-600">
-                    <AlertCircle className="w-3 h-3" />
-                    <span>Connection Error</span>
-                  </div>
-                )}
-              </div>
+      <div className="sticky top-0 z-40 glass-effect px-4 py-4 border-b border-gray-200/50 shadow-sm">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="w-10 h-10 bg-gradient-to-br from-naija-green to-eko-teal rounded-2xl flex items-center justify-center flex-shrink-0">
+              <Bot className="w-5 h-5 text-white" />
             </div>
-            <p className="text-sm text-muted-foreground">AI Financial Advisor</p>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-xl font-bold text-text-dark tracking-tight">CashDey Coach</h1>
+                {/* Connection Status Indicator */}
+                <div className="flex items-center gap-1.5">
+                  {connectionStatus === "connected" && (
+                    <div className="flex items-center gap-1 text-xs text-green-600">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                      <span className="hidden sm:inline">Connected</span>
+                    </div>
+                  )}
+                  {connectionStatus === "connecting" && (
+                    <div className="flex items-center gap-1 text-xs text-yellow-600">
+                      <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></div>
+                      <span className="hidden sm:inline">Connecting...</span>
+                    </div>
+                  )}
+                  {connectionStatus === "error" && (
+                    <div className="flex items-center gap-1 text-xs text-red-600">
+                      <AlertCircle className="w-3 h-3" />
+                      <span className="hidden sm:inline">Error</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <p className="text-xs text-text-muted font-medium">AI Financial Advisor</p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          {/* Language Display (read-only, matches profile) */}
-          <div className="inline-flex items-center justify-center gap-2 rounded-md bg-muted px-3 py-2 text-sm font-medium border border-input min-w-[120px]">
-            <Languages className="w-4 h-4" />
-            <span>
-              {profile?.communication_style === "formal" ? "English" : profile?.communication_style === "pidgin" ? "Pidgin" : "Auto"}
-            </span>
-          </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setSpeechSynthesisEnabled(!speechSynthesisEnabled)}
-            title={speechSynthesisEnabled ? "Disable voice responses" : "Enable voice responses"}
-          >
-            {speechSynthesisEnabled ? (
-              <Volume2 className="w-5 h-5" />
-            ) : (
-              <VolumeX className="w-5 h-5" />
-            )}
-          </Button>
-          {messages.length > 1 && (
+          <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+            {/* Language Display (read-only, matches profile) */}
+            <div className="hidden sm:inline-flex items-center justify-center gap-1.5 rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-medium border border-gray-200">
+              <Languages className="w-3.5 h-3.5" />
+              <span>
+                {profile?.communication_style === "formal" ? "English" : profile?.communication_style === "pidgin" ? "Pidgin" : "Auto"}
+              </span>
+            </div>
             <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSendTranscript}
-              disabled={sendingTranscript}
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9"
+              onClick={() => setSpeechSynthesisEnabled(!speechSynthesisEnabled)}
+              title={speechSynthesisEnabled ? "Disable voice responses" : "Enable voice responses"}
             >
-              <Mail className="w-4 h-4 mr-2" />
-              {sendingTranscript ? "Sending..." : "Email Transcript"}
+              {speechSynthesisEnabled ? (
+                <Volume2 className="w-4 h-4" />
+              ) : (
+                <VolumeX className="w-4 h-4" />
+              )}
             </Button>
-          )}
+            {messages.length > 1 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSendTranscript}
+                disabled={sendingTranscript}
+                className="hidden sm:flex text-xs px-2"
+              >
+                <Mail className="w-3.5 h-3.5 mr-1.5" />
+                {sendingTranscript ? "Sending..." : "Email"}
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
+        </div>
 
       {/* Mode Toggle */}
-      <div className="flex gap-2 mb-4 bg-muted p-1 rounded-lg">
-        <Button
-          variant={mode === "text" ? "default" : "ghost"}
-          size="sm"
-          className="flex-1"
-          onClick={() => {
-            setMode("text");
-            setShowEmojiPicker(false);
-          }}
-        >
-          <FileText className="w-4 h-4 mr-2" />
-          Text
-        </Button>
-        <Button
-          variant={mode === "voice" ? "default" : "ghost"}
-          size="sm"
-          className="flex-1"
-          onClick={() => {
-            setMode("voice");
-            setShowEmojiPicker(false);
-          }}
-        >
-          <Mic className="w-4 h-4 mr-2" />
-          Voice
-        </Button>
+      <div className="px-4 mb-4">
+        <div className="flex gap-2 bg-gray-100 p-1 rounded-xl">
+          <Button
+            variant={mode === "text" ? "default" : "ghost"}
+            size="sm"
+            className="flex-1 text-xs sm:text-sm"
+            onClick={() => {
+              setMode("text");
+              setShowEmojiPicker(false);
+            }}
+          >
+            <FileText className="w-3.5 h-3.5 sm:mr-2" />
+            <span className="hidden sm:inline">Text</span>
+          </Button>
+          <Button
+            variant={mode === "voice" ? "default" : "ghost"}
+            size="sm"
+            className="flex-1 text-xs sm:text-sm"
+            onClick={() => {
+              setMode("voice");
+              setShowEmojiPicker(false);
+            }}
+          >
+            <Mic className="w-3.5 h-3.5 sm:mr-2" />
+            <span className="hidden sm:inline">Voice</span>
+          </Button>
+        </div>
       </div>
 
       {/* Chat Messages - WhatsApp Style */}
-      <Card className="flex-1 flex flex-col mb-4 bg-[#ECE5DD]">
-        <CardContent className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 flex flex-col mb-4 px-4 overflow-hidden">
+        <Card className="flex-1 flex flex-col bg-[#ECE5DD] shadow-soft border-gray-200/50">
+          <CardContent className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 hide-scrollbar">
           {messages.length === 1 && (
             <div className="text-center py-8">
               <p className="text-muted-foreground mb-2">Start a conversation</p>
@@ -527,12 +534,13 @@ export default function CoachChat({
             </div>
           )}
           <div ref={messagesEndRef} />
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Voice Mode Toggle for Transcription */}
       {mode === "voice" && (
-        <div className="mb-2 flex items-center gap-2">
+        <div className="px-4 mb-2 flex items-center gap-2">
           <input
             type="checkbox"
             id="transcribe"
@@ -540,19 +548,19 @@ export default function CoachChat({
             onChange={(e) => setTranscribeToEmail(e.target.checked)}
             className="rounded"
           />
-          <label htmlFor="transcribe" className="text-sm text-muted-foreground">
+          <label htmlFor="transcribe" className="text-xs text-text-muted font-medium">
             Transcribe voice to text
           </label>
         </div>
       )}
 
       {/* Input Area */}
-      <div className="relative">
+      <div className="relative px-4 pb-4">
         {showEmojiPicker && (
           <div className="absolute bottom-full mb-2 right-0 z-50">
             <EmojiPicker
               onEmojiClick={handleEmojiClick}
-              width={350}
+              width={typeof window !== "undefined" ? Math.min(350, window.innerWidth - 32) : 350}
               height={400}
             />
           </div>

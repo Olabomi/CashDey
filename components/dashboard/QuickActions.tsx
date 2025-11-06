@@ -41,18 +41,18 @@ const actions = [
 export default function QuickActions() {
   return (
     <div className="mb-6">
-      <h3 className="text-lg font-bold text-text-dark mb-4">Quick Actions</h3>
+      <h3 className="text-lg font-bold text-text-dark mb-4 tracking-tight">Quick Actions</h3>
       <div className="grid grid-cols-2 gap-3">
-        {actions.map((action) => {
+        {actions.map((action, index) => {
           const Icon = action.icon;
           return (
             <Link key={action.label} href={action.href}>
-              <button className="bg-white rounded-2xl p-4 shadow-md border border-gray-100 hover:shadow-lg transition-shadow w-full text-left">
-                <div className={`w-12 h-12 ${action.bgColor} rounded-2xl flex items-center justify-center mb-3 mx-auto`}>
-                  <Icon className={`${action.color} text-lg`} />
+              <button className="bg-white rounded-2xl p-5 shadow-soft border border-gray-100/50 hover:shadow-elevated transition-all duration-300 w-full text-left card-hover group">
+                <div className={`w-14 h-14 ${action.bgColor} rounded-2xl flex items-center justify-center mb-3 mx-auto transition-transform duration-300 group-hover:scale-110`}>
+                  <Icon className={`${action.color} text-xl`} />
                 </div>
-                <h4 className="font-semibold text-sm text-text-dark mb-1">{action.label}</h4>
-                <p className="text-xs text-gray-500">{action.description}</p>
+                <h4 className="font-bold text-sm text-text-dark mb-1.5 tracking-tight">{action.label}</h4>
+                <p className="text-xs text-text-muted font-medium">{action.description}</p>
               </button>
             </Link>
           );

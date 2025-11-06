@@ -63,10 +63,10 @@ export default function WeeklySpendingWidget({
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-md border border-gray-100 mb-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-bold text-text-dark">This Week&apos;s Spending</h3>
-        <span className="text-sm text-gray-500">{getWeekRange()}</span>
+    <div className="bg-white rounded-2xl p-6 shadow-soft border border-gray-100/50 mb-6 card-hover">
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="text-lg font-bold text-text-dark tracking-tight">This Week&apos;s Spending</h3>
+        <span className="text-xs text-text-muted font-medium bg-gray-100 px-2.5 py-1 rounded-full">{getWeekRange()}</span>
       </div>
       
       <div className="space-y-4">
@@ -78,24 +78,24 @@ export default function WeeklySpendingWidget({
           const isPositive = percentageChange > 0;
 
           return (
-            <div key={category} className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
+            <div key={category} className="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50/50 transition-colors duration-200">
+              <div className="flex items-center space-x-3 flex-1 min-w-0">
                 {Icon ? (
-                  <div className={`w-10 h-10 ${colors.bg} rounded-full flex items-center justify-center`}>
-                    <Icon className={`${colors.text} text-sm`} />
+                  <div className={`w-12 h-12 ${colors.bg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
+                    <Icon className={`${colors.text} text-base`} />
                   </div>
                 ) : (
-                  <div className="text-2xl">{iconEmoji}</div>
+                  <div className="text-3xl flex-shrink-0">{iconEmoji}</div>
                 )}
-                <div>
-                  <p className="font-semibold text-sm text-text-dark">{category}</p>
-                  <p className="text-xs text-gray-500">{data.count} transactions</p>
+                <div className="flex-1 min-w-0">
+                  <p className="font-bold text-sm text-text-dark truncate">{category}</p>
+                  <p className="text-xs text-text-muted font-medium">{data.count} transactions</p>
                 </div>
               </div>
-              <div className="text-right">
+              <div className="text-right flex-shrink-0 ml-3">
                 <p className="font-bold text-sm text-text-dark">{formatCurrency(data.amount)}</p>
-                <p className={`text-xs ${isPositive ? "text-red-600" : "text-green-600"}`}>
-                  {isPositive ? "+" : ""}{percentageChange}%
+                <p className={`text-xs font-bold ${isPositive ? "text-red-600" : "text-green-600"}`}>
+                  {isPositive ? "↑" : "↓"} {Math.abs(percentageChange)}%
                 </p>
               </div>
             </div>
@@ -104,8 +104,8 @@ export default function WeeklySpendingWidget({
       </div>
       
       <Link href="/dashboard/wallet">
-        <button className="w-full mt-4 py-3 bg-naija-green/10 text-naija-green font-semibold text-sm rounded-xl hover:bg-naija-green/20 transition-colors">
-          View Full Breakdown
+        <button className="w-full mt-5 py-3.5 bg-gradient-to-r from-naija-green/10 to-eko-teal/10 text-naija-green font-bold text-sm rounded-xl hover:from-naija-green/20 hover:to-eko-teal/20 transition-all duration-300 border border-naija-green/20 button-press">
+          View Full Breakdown →
         </button>
       </Link>
     </div>

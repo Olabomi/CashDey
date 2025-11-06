@@ -39,56 +39,63 @@ export default function WalletContent({ expenses, initialBalance }: WalletConten
   }, {} as { [key: string]: Expense[] });
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-4xl">
-      <h1 className="text-2xl font-bold mb-6">Wallet</h1>
+    <div className="max-w-sm mx-auto bg-light-bg min-h-screen pb-24">
+      {/* Header */}
+      <div className="sticky top-0 z-40 glass-effect px-4 py-4 border-b border-gray-200/50 shadow-sm">
+        <h1 className="text-2xl font-bold text-text-dark tracking-tight">Wallet</h1>
+      </div>
       
+      <div className="px-4 py-6 space-y-6">
       {/* Balance Card */}
-      <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white mb-6">
+      <Card className="bg-gradient-to-br from-naija-green via-naija-green to-eko-teal text-white shadow-elevated shadow-glow">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
             <div>
-              <p className="text-green-100 text-sm">Current Balance</p>
-              <p className="text-3xl font-bold">{formatCurrency(totalBalance)}</p>
+              <p className="text-white/90 text-sm font-medium mb-1">Current Balance</p>
+              <p className="text-3xl sm:text-4xl font-bold tracking-tight">{formatCurrency(totalBalance)}</p>
             </div>
-            <div className="text-right">
-              <p className="text-green-100 text-sm">This Month</p>
-              <p className="text-xl font-semibold">+{formatCurrency(monthlySavings)}</p>
+            <div className="text-left sm:text-right">
+              <p className="text-white/90 text-sm font-medium">This Month</p>
+              <p className="text-xl sm:text-2xl font-bold">+{formatCurrency(monthlySavings)}</p>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-green-400/30">
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-4 border-t border-white/20">
             <div>
-              <p className="text-green-100 text-sm">Income</p>
-              <p className="text-lg font-semibold">{formatCurrency(monthlyIncome)}</p>
+              <p className="text-white/90 text-xs sm:text-sm font-medium">Income</p>
+              <p className="text-base sm:text-lg font-bold">{formatCurrency(monthlyIncome)}</p>
             </div>
             <div>
-              <p className="text-green-100 text-sm">Expenses</p>
-              <p className="text-lg font-semibold">{formatCurrency(monthlyExpenses)}</p>
+              <p className="text-white/90 text-xs sm:text-sm font-medium">Expenses</p>
+              <p className="text-base sm:text-lg font-bold">{formatCurrency(monthlyExpenses)}</p>
             </div>
             <div>
-              <p className="text-green-100 text-sm">Savings</p>
-              <p className="text-lg font-semibold">{formatCurrency(monthlySavings)}</p>
+              <p className="text-white/90 text-xs sm:text-sm font-medium">Savings</p>
+              <p className="text-base sm:text-lg font-bold">{formatCurrency(monthlySavings)}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Filters */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
         <Button
           variant={filter === "all" ? "default" : "outline"}
           onClick={() => setFilter("all")}
+          className="flex-shrink-0"
         >
           All
         </Button>
         <Button
           variant={filter === "income" ? "default" : "outline"}
           onClick={() => setFilter("income")}
+          className="flex-shrink-0"
         >
           Income
         </Button>
         <Button
           variant={filter === "expense" ? "default" : "outline"}
           onClick={() => setFilter("expense")}
+          className="flex-shrink-0"
         >
           Expenses
         </Button>
@@ -98,23 +105,27 @@ export default function WalletContent({ expenses, initialBalance }: WalletConten
       <div className="space-y-6">
         {Object.entries(groupedExpenses).map(([date, dateExpenses]) => (
           <div key={date}>
-            <h3 className="font-semibold mb-3">{date}</h3>
+            <h3 className="font-bold text-text-dark mb-3 text-sm tracking-tight">{date}</h3>
             <div className="space-y-2">
               {dateExpenses.map((expense) => (
-                <Card key={expense.id}>
+                <Card key={expense.id} className="shadow-soft border-gray-200/50 card-hover">
                   <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
-                          {expense.category.charAt(0)}
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <div className="w-12 h-12 bg-gradient-to-br from-naija-green/20 to-eko-teal/20 rounded-2xl flex items-center justify-center flex-shrink-0">
+                          <span className="text-naija-green font-bold text-sm">
+                            {expense.category.charAt(0)}
+                          </span>
                         </div>
-                        <div>
-                          <p className="font-medium">{expense.description || expense.category}</p>
-                          <p className="text-sm text-muted-foreground">{expense.category}</p>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-bold text-sm text-text-dark truncate">
+                            {expense.description || expense.category}
+                          </p>
+                          <p className="text-xs text-text-muted font-medium">{expense.category}</p>
                         </div>
                       </div>
                       <p
-                        className={`font-semibold ${
+                        className={`font-bold text-base flex-shrink-0 ${
                           expense.type === "income" ? "text-green-600" : "text-red-600"
                         }`}
                       >
@@ -128,6 +139,7 @@ export default function WalletContent({ expenses, initialBalance }: WalletConten
             </div>
           </div>
         ))}
+      </div>
       </div>
     </div>
   );
