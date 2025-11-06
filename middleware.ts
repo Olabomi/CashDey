@@ -21,6 +21,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next({ request });
   }
 
+  // Skip auth checks for static files and most API routes
+  const pathname = request.nextUrl.pathname;
+  if (
+    pathname.startsWith("/_next") ||
+    (pathname.startsWith("/api") && !pathname.startsWith("/api/auth")) ||
+    pathname.match(/\.(ico|png|jpg|jpeg|svg|gif|webp|css|js)$/)
+  ) {
+    return NextResponse.next();
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -47,27 +57,33 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Only check user for protected routes
+  const isProtectedRoute = pathname.startsWith("/dashboard") || pathname.startsWith("/onboarding");
+  const isAuthRoute = pathname.startsWith("/auth");
 
-  // Protect dashboard routes
-  if (request.nextUrl.pathname.startsWith("/dashboard") && !user) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
-  }
+  if (isProtectedRoute || isAuthRoute) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  // Protect onboarding routes
-  if (request.nextUrl.pathname.startsWith("/onboarding") && !user) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
-  }
+    // Protect dashboard routes
+    if (pathname.startsWith("/dashboard") && !user) {
+      return NextResponse.redirect(new URL("/auth/login", request.url));
+    }
 
-  // Redirect authenticated users away from auth pages
-  if (
-    request.nextUrl.pathname.startsWith("/auth") &&
-    user &&
-    !request.nextUrl.pathname.startsWith("/auth/callback")
-  ) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    // Protect onboarding routes
+    if (pathname.startsWith("/onboarding") && !user) {
+      return NextResponse.redirect(new URL("/auth/login", request.url));
+    }
+
+    // Redirect authenticated users away from auth pages (except callback)
+    if (
+      isAuthRoute &&
+      user &&
+      !pathname.startsWith("/auth/callback")
+    ) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
   }
 
   return supabaseResponse;

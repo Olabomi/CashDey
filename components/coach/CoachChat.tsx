@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { getCoachResponse, CoachMessage } from "@/lib/openai/coach";
+import { CoachMessage } from "@/lib/openai/coach";
 import { Profile, Expense, SavingsGoal } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -60,13 +60,27 @@ export default function CoachChat({
     setLoading(true);
 
     try {
-      const response = await getCoachResponse(
-        [...messages, userMessage],
-        profile?.preferred_name || "Chief",
-        profile?.communication_style || "auto",
-        userExpenses,
-        userGoals
-      );
+      // Call the API route instead of directly calling OpenAI
+      const apiResponse = await fetch("/api/coach", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: [...messages, userMessage],
+          preferredName: profile?.preferred_name || "Chief",
+          communicationStyle: profile?.communication_style || "auto",
+          userExpenses,
+          userGoals,
+        }),
+      });
+
+      if (!apiResponse.ok) {
+        const errorData = await apiResponse.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to get response from coach");
+      }
+
+      const { response } = await apiResponse.json();
 
       const assistantMessage: CoachMessage = {
         role: "assistant",
