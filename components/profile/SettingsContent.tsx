@@ -10,6 +10,7 @@ import {
   ArrowLeft,
   Bell,
   Edit,
+  User,
   Mail,
   Key,
   Phone,
@@ -47,6 +48,13 @@ import {
   Lightbulb,
   Sparkles,
   Smartphone,
+  ChevronRight,
+  Sliders,
+  Sprout,
+  CheckCircle2,
+  LogOut,
+  UserX,
+  Settings,
 } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -347,7 +355,7 @@ export default function SettingsContent({
         <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-              <SettingsIcon className="w-5 h-5 text-blue-600" />
+              <Settings className="w-5 h-5 text-blue-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900">Account Management</h3>
           </div>
@@ -522,7 +530,7 @@ export default function SettingsContent({
                   {key === "billReminders" && <Calendar className="w-5 h-5 text-gray-600" />}
                   {key === "coachInsights" && <Bot className="w-5 h-5 text-gray-600" />}
                   {key === "goalUpdates" && <Trophy className="w-5 h-5 text-gray-600" />}
-                  {key === "emailNotifications" && <Envelope className="w-5 h-5 text-gray-600" />}
+                  {key === "emailNotifications" && <Mail className="w-5 h-5 text-gray-600" />}
                   <div>
                     <p className="font-medium text-gray-900">
                       {key === "budgetAlerts" && "Budget Alerts"}

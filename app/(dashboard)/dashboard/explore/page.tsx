@@ -15,7 +15,7 @@ export default async function ExplorePage() {
   const [profileResult, subscriptionResult, newsPreferenceResult] = await Promise.all([
     supabase.from("profiles").select("*").eq("user_id", user.id).single(),
     supabase.from("subscriptions").select("*").eq("user_id", user.id).single(),
-    supabase.from("user_settings").select("explore_preferences").eq("user_id", user.id).single().catch(() => ({ data: null })),
+    supabase.from("user_settings").select("explore_preferences").eq("user_id", user.id).maybeSingle(),
   ]);
 
   return (
