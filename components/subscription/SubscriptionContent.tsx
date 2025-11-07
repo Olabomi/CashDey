@@ -13,7 +13,7 @@ import {
   PieChart,
   FileText,
   ShieldCheck,
-  Robot,
+  Bot,
   Users,
   Star,
   CreditCard,
@@ -109,7 +109,7 @@ const premiumBenefits = [
     title: "Unlimited Coach Access",
     description:
       "Ask your financial coach anything, anytime. Get detailed responses and personalized advice in Nigerian Pidgin or formal English.",
-    icon: Robot,
+    icon: Bot,
     gradient: "from-green-50 to-emerald-50",
     border: "border-green-100",
   },
@@ -436,7 +436,7 @@ export default function SubscriptionContent({ subscription }: SubscriptionConten
 
       {/* Premium Benefits */}
       <section className="px-4 py-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">What You'll Get</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">What You&apos;ll Get</h3>
         <div className="space-y-4">
           {premiumBenefits.map((benefit) => {
             const Icon = benefit.icon;

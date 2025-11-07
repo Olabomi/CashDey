@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Profile, Expense, SavingsGoal, CommunicationStyle } from "@/types";
@@ -9,7 +9,6 @@ import { calculateGoalProgress, calculateTotalBalance } from "@/lib/dashboard/ca
 import {
   ArrowLeft,
   Bell,
-  User,
   Edit,
   Mail,
   Key,
@@ -24,7 +23,6 @@ import {
   Calendar,
   Bot,
   Trophy,
-  Envelope,
   Shield,
   Fingerprint,
   Lock,
@@ -33,21 +31,22 @@ import {
   Download,
   CreditCard,
   Receipt,
+  Wallet,
   Database,
-  Sync,
+  RefreshCcw,
   Trash2,
+  Share2,
   HelpCircle,
   Headphones,
+  BookOpen,
   Star,
-  Share2,
   Info,
-  Sprout,
-  LogOut,
-  UserX,
-  ChevronRight,
-  Settings as SettingsIcon,
-  Sliders,
-  CheckCircle2,
+  Users,
+  Compass,
+  Target,
+  Lightbulb,
+  Sparkles,
+  Smartphone,
 } from "lucide-react";
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -123,28 +122,31 @@ export default function SettingsContent({
   const isPremium = subscription?.plan !== "free" && subscription?.status === "active";
 
   // Handlers
-  const handleSavePreferences = async () => {
-    const { error } = await supabase
-      .from("profiles")
-      .update({
-        communication_style: coachTone,
-      })
-      .eq("user_id", user.id);
+  const savePreferences = useMemo(
+    () => async () => {
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          communication_style: coachTone,
+        })
+        .eq("user_id", user.id);
 
-    if (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: "Preferences saved successfully",
-      });
-      router.refresh();
-    }
-  };
+      if (error) {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: "Preferences saved successfully",
+        });
+        router.refresh();
+      }
+    },
+    [coachTone, router, supabase, toast, user.id]
+  );
 
   const handleChangePassword = async () => {
     if (newPassword !== confirmPassword) {
@@ -270,8 +272,8 @@ export default function SettingsContent({
   };
 
   useEffect(() => {
-    handleSavePreferences();
-  }, [coachTone]);
+    savePreferences();
+  }, [savePreferences]);
 
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen relative overflow-hidden pb-24">
@@ -749,7 +751,7 @@ export default function SettingsContent({
             </div>
             <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
               <div className="flex items-center space-x-3">
-                <Sync className="w-5 h-5 text-gray-600" />
+                <RefreshCcw className="w-5 h-5 text-gray-600" />
                 <div className="text-left">
                   <p className="font-medium text-gray-900">Sync Settings</p>
                   <p className="text-sm text-gray-500">Auto-backup and cloud sync</p>
@@ -872,7 +874,7 @@ export default function SettingsContent({
               <div className="flex items-center space-x-3">
                 <CheckCircle2 className="w-5 h-5 text-gray-600" />
                 <div className="text-left">
-                  <p className="font-medium text-gray-900">What's New</p>
+                  <p className="font-medium text-gray-900">What&apos;s New</p>
                   <p className="text-sm text-gray-500">Latest features and improvements</p>
                 </div>
               </div>

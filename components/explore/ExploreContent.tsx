@@ -25,6 +25,7 @@ import {
   CircleDollarSign,
   TrendingUp,
   Compass,
+  Heart,
 } from "lucide-react";
 import ExploreTools from "@/components/explore/ExploreTools";
 import MarketNews from "@/components/explore/MarketNews";

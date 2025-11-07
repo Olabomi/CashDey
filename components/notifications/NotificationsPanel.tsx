@@ -12,6 +12,7 @@ import {
   AlarmClock,
   Lightbulb,
   Info,
+  Bell,
   Mail,
   Smartphone,
   Archive,
@@ -38,7 +39,7 @@ const NOTIFICATIONS: NotificationItem[] = [
   {
     id: "goal-50",
     title: "Goal Achievement! 🎉",
-    body: "Congratulations Boss! You've reached 50% of your Emergency Fund goal. Keep am up!",
+    body: "Congratulations Boss! You&apos;ve reached 50% of your Emergency Fund goal. Keep am up!",
     timestamp: "2 hours ago",
     section: "today",
     category: "achievement",
@@ -78,7 +79,7 @@ const NOTIFICATIONS: NotificationItem[] = [
   {
     id: "food-budget-alert",
     title: "Budget Alert",
-    body: "You've exceeded your monthly food budget by ₦2,500. Time to adjust your spending, Boss!",
+    body: "You&apos;ve exceeded your monthly food budget by ₦2,500. Time to adjust your spending, Boss!",
     timestamp: "Yesterday, 3:45 PM",
     section: "yesterday",
     category: "reminder",
@@ -87,7 +88,7 @@ const NOTIFICATIONS: NotificationItem[] = [
   {
     id: "utility-reminder",
     title: "Electricity Bill Due",
-    body: "Your NEPA bill of ₦8,500 is due in 12 days. Don't let them take light from you o!",
+    body: "Your NEPA bill of ₦8,500 is due in 12 days. Don&apos;t let them take light from you o!",
     timestamp: "Yesterday, 10:30 AM",
     section: "yesterday",
     category: "reminder",
@@ -105,7 +106,7 @@ const NOTIFICATIONS: NotificationItem[] = [
   {
     id: "savings-milestone",
     title: "Savings Milestone Reached!",
-    body: "You've successfully saved ₦15,000 this month. Your laptop fund is growing strong, Boss!",
+    body: "You&apos;ve successfully saved ₦15,000 this month. Your laptop fund is growing strong, Boss!",
     timestamp: "3 days ago",
     section: "week",
     category: "achievement",
@@ -114,7 +115,7 @@ const NOTIFICATIONS: NotificationItem[] = [
   {
     id: "security-update",
     title: "Security Update",
-    body: "New login from iPhone 13. If this wasn't you, please secure your account immediately.",
+    body: "New login from iPhone 13. If this wasn&apos;t you, please secure your account immediately.",
     timestamp: "4 days ago",
     section: "week",
     category: "reminder",
@@ -132,7 +133,7 @@ const NOTIFICATIONS: NotificationItem[] = [
   {
     id: "welcome",
     title: "Welcome to CashDey, Boss!",
-    body: "We're excited to help you manage your money like a pro. Let's start this financial journey together!",
+    body: "We&apos;re excited to help you manage your money like a pro. Let&apos;s start this financial journey together!",
     timestamp: "2 weeks ago",
     section: "older",
     category: "insight",
