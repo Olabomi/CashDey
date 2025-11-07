@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import ProfileContent from "@/components/profile/ProfileContent";
+import SettingsContent from "@/components/profile/SettingsContent";
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -12,18 +12,23 @@ export default async function ProfilePage() {
     redirect("/auth/login");
   }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("user_id", user.id)
-    .single();
+  const [profileResult, subscriptionResult, expensesResult, goalsResult, survivalResult] = await Promise.all([
+    supabase.from("profiles").select("*").eq("user_id", user.id).single(),
+    supabase.from("subscriptions").select("*").eq("user_id", user.id).single(),
+    supabase.from("expenses").select("*").eq("user_id", user.id),
+    supabase.from("savings_goals").select("*").eq("user_id", user.id),
+    supabase.from("survival_calculations").select("*").eq("user_id", user.id).single(),
+  ]);
 
-  const { data: subscription } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("user_id", user.id)
-    .single();
-
-  return <ProfileContent profile={profile} subscription={subscription} user={user} />;
+  return (
+    <SettingsContent
+      profile={profileResult.data}
+      subscription={subscriptionResult.data}
+      user={user}
+      expenses={expensesResult.data || []}
+      goals={goalsResult.data || []}
+      survival={survivalResult.data}
+    />
+  );
 }
 
