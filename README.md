@@ -1,41 +1,20 @@
-# CashDey MVP
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-A Nigerian financial OS - spending tracking, savings, goals, and AI-powered financial coaching.
+# Run and deploy your AI Studio app
 
-## Tech Stack
+This contains everything you need to run your app locally.
 
-- Next.js 15 (App Router)
-- TypeScript
-- Supabase (PostgreSQL, Auth, Storage)
-- OpenAI GPT-4-Turbo
-- Paystack
-- Tailwind CSS
-- shadcn/ui
+View your app in AI Studio: https://ai.studio/apps/drive/1w2Ja3kmHlxKoPp8R8n-0m1cSP2_eVokZ
 
-## Getting Started
+## Run Locally
+
+**Prerequisites:**  Node.js
+
 
 1. Install dependencies:
-```bash
-npm install
-```
-
-2. Setup environment variables:
-```bash
-cp .env.example .env.local
-```
-
-3. Run the development server:
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser.
-
-## Project Structure
-
-- `app/` - Next.js App Router pages
-- `components/` - React components
-- `lib/` - Utilities and configurations
-- `types/` - TypeScript type definitions
-- `supabase/` - Database migrations and Edge Functions
-
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

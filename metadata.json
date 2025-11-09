@@ -1,0 +1,8 @@
+{
+  "name": "CashDey: The Nigerian Financial OS",
+  "description": "CashDey is a web-based, mobile-smart “Financial OS” designed for Nigerians to own their financial journey. It unites spending, savings, portfolio management, perks, and personal advisors in one seamless AI-powered hub. Acting like a CFA-level strategist, it delivers sharp guidance across investing, insurance, debt, pensions, and estate planning—while tracking FX, inflation, oil, and MPR in real time. Speaking both English and Pidgin, CashDey blends street sense with market intelligence—Naija finance, redefined.",
+  "requestFramePermissions": [
+    "microphone",
+    "camera"
+  ]
+}
