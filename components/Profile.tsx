@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useLocale } from '../contexts/LocaleContext';
+import { useAuth } from '../contexts/AuthContext';
 import { useData } from '../contexts/DataContext';
 import { 
     CameraIcon, CloseIcon, ChevronRightIcon, ShieldIcon, DownloadIcon, TrashIcon, 
@@ -23,6 +24,7 @@ import EditProfileModal from './EditProfileModal';
 export const Profile: React.FC = () => {
     const { user, updateProfilePic, updateProfile } = useData();
     const { t } = useLocale();
+    const { signOut } = useAuth();
 
     const [is2faEnabled, setIs2faEnabled] = useState(false);
     
@@ -151,7 +153,7 @@ export const Profile: React.FC = () => {
 
                 <MoneyStorySection />
                 
-                <button className="w-full text-center bg-rose-600/20 text-rose-400 border border-rose-500/30 hover:bg-rose-600/40 transition p-3 rounded-lg font-medium">
+                <button onClick={signOut} className="w-full text-center bg-rose-600/20 text-rose-400 border border-rose-500/30 hover:bg-rose-600/40 transition p-3 rounded-lg font-medium">
                     Log Out
                 </button>
             </div>

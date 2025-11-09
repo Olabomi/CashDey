@@ -28,8 +28,12 @@ const UnifiedCoach: React.FC = () => {
     const [input, setInput] = useState('');
     const [isTextLoading, setIsTextLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    // FIX: Use environment variable for API key.
-    const aiText = useMemo(() => new GoogleGenAI({ apiKey: process.env.API_KEY }), []);
+    const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!geminiApiKey) {
+        throw new Error('VITE_GEMINI_API_KEY is not set. Please configure it in your environment.');
+    }
+
+    const aiText = useMemo(() => new GoogleGenAI({ apiKey: geminiApiKey }), [geminiApiKey]);
 
 
     // --- Live Coach State ---
@@ -37,8 +41,7 @@ const UnifiedCoach: React.FC = () => {
     const [transcriptions, setTranscriptions] = useState<Transcription[]>([]);
     const [isSpeaking, setIsSpeaking] = useState(false);
     // FIX: Infer session type from aiLive.live.connect and move aiLive definition before sessionRef.
-    // FIX: Use environment variable for API key.
-    const aiLive = useMemo(() => new GoogleGenAI({ apiKey: process.env.API_KEY }), []);
+    const aiLive = useMemo(() => new GoogleGenAI({ apiKey: geminiApiKey }), [geminiApiKey]);
     const sessionRef = useRef<Awaited<ReturnType<typeof aiLive.live.connect>> | null>(null);
     const audioContextRef = useRef<{ input: AudioContext; output: AudioContext } | null>(null);
     const mediaStreamRef = useRef<MediaStream | null>(null);
